@@ -20,3 +20,14 @@ export const getOne = (id) => {
     return fetch(`${BASE_URL}/${id}`)
         .then(res => res.json())
 }
+
+export const edit = (id, data) => {
+    return fetch(`${BASE_URL}/${id}`, {
+        method: 'PUT',
+        headers: {
+            'content-type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+        .then(res => res.json())
+}

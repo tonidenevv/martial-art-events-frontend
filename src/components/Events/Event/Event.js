@@ -7,7 +7,7 @@ const Event = ({ event }) => {
             <div className="card-body">
                 <h5 className="card-title">{event.title}</h5>
                 <p className="card-text">{event.sport}</p>
-                <Link to={`/events/${event._id}`} className="btn btn-primary">Learn More...</Link>
+                <Link to={`/events/${event._id}`} className="btn btn-primary">Details</Link>
             </div>
         </div>
     )

@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import * as eventService from '../../services/eventService';
 
-const Create = () => {
+const Edit = () => {
     const [values, setValues] = useState({
         title: '',
         sport: '',
@@ -10,9 +10,25 @@ const Create = () => {
         description: '',
         imageUrl: '',
     });
-
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
+
+    const { eventId } = useParams();
+
+    useEffect(() => {
+        setIsLoading(true);
+        eventService.getOne(eventId)
+            .then(res => {
+                setValues({ title: res.title, sport: res.sport, ticketPrice: res.ticketPrice, description: res.description, imageUrl: res.imageUrl })
+                setIsLoading(false);
+            })
+            .catch(err => console.log(err));
+    }, [eventId]);
+
+    const handleChange = (e) => {
+        setValues(old => ({ ...old, [e.target.name]: e.target.value }))
+    }
+
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
@@ -32,21 +48,18 @@ const Create = () => {
             imageUrl: errorsArr[4],
         });
 
+
         if (!errorsArr.some(x => x === true)) {
             setIsLoading(true);
-            eventService.create(values)
+            eventService.edit(eventId, values)
                 .then(() => {
                     setIsLoading(false);
-                    navigate('/events')
+                    navigate(`/events/${eventId}`)
                 })
                 .catch(err => {
                     console.log(err);
                 });
         }
-    }
-
-    const handleChange = (e) => {
-        setValues(old => ({ ...old, [e.target.name]: e.target.value }))
     }
 
     return (
@@ -57,7 +70,7 @@ const Create = () => {
                 </div>
             </div>
             : <>
-                <h3 className="text-center">Create an Event</h3>
+                <h3 className="text-center">Edit an Event</h3>
                 <div className="container align-items-center d-flex justify-content-center">
                     <form onSubmit={handleSubmit}>
                         <div className="mb-3">
@@ -121,7 +134,7 @@ const Create = () => {
                             />
                         </div>
                         <button type="submit" className="btn btn-primary">
-                            Create
+                            Edit
                         </button>
                     </form>
                 </div>
@@ -129,4 +142,4 @@ const Create = () => {
     )
 }
 
-export default Create;
+export default Edit;

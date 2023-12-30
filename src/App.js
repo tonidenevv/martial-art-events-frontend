@@ -4,6 +4,7 @@ import Home from "./components/Home/Home";
 import Events from "./components/Events/Events";
 import Create from "./components/Create/Create";
 import Details from "./components/Details/Details";
+import Edit from "./components/Edit/Edit";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/events" element={<Events />} />
           <Route path="/create" element={<Create />} />
           <Route path="/events/:eventId" element={<Details />} />
+          <Route path="/events/:eventId/edit" element={<Edit />} />
         </Routes>
       </div>
     </BrowserRouter>
