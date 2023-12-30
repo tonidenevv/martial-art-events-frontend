@@ -15,3 +15,8 @@ export const create = (data) => {
     })
         .then(res => res.json())
 }
+
+export const getOne = (id) => {
+    return fetch(`${BASE_URL}/${id}`)
+        .then(res => res.json())
+}

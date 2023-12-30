@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./components/Home/Home";
 import Events from "./components/Events/Events";
 import Create from "./components/Create/Create";
+import Details from "./components/Details/Details";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/events" element={<Events />} />
           <Route path="/create" element={<Create />} />
+          <Route path="/events/:eventId" element={<Details />} />
         </Routes>
       </div>
     </BrowserRouter>
