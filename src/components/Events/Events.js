@@ -10,6 +10,9 @@ const Events = () => {
             .then(res => {
                 setIsLoading(false);
                 setEvents(res);
+            })
+            .catch(err => {
+                console.log(err);
             });
     }, []);
 
@@ -20,7 +23,7 @@ const Events = () => {
                     <span className="visually-hidden">Loading...</span>
                 </div>
             </div>
-            : events.map(x => <Event key={x._id} event={x} />)
+            : (events ? events.map(x => <Event key={x._id} event={x} />) : <p>No events found.</p>)
     )
 };
 
