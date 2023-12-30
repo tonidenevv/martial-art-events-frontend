@@ -4,8 +4,10 @@ import Event from './Event/Event';
 const Events = () => {
     const [events, setEvents] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(false);
     useEffect(() => {
         setIsLoading(true);
+        setError(false);
         eventService.getAll()
             .then(res => {
                 setIsLoading(false);
@@ -13,6 +15,8 @@ const Events = () => {
             })
             .catch(err => {
                 console.log(err);
+                setIsLoading(false);
+                setError('Something went wrong...');
             });
     }, []);
 
@@ -23,7 +27,11 @@ const Events = () => {
                     <span className="visually-hidden">Loading...</span>
                 </div>
             </div>
-            : (events ? events.map(x => <Event key={x._id} event={x} />) : <p>No events found.</p>)
+            : error
+                ? <p className="text-center fs-1">{error}</p>
+                : events
+                    ? <div className="row">{events.map(x => <Event key={x._id} event={x} />)}</div>
+                    : <p>No events found.</p>
     )
 };
 

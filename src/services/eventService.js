@@ -13,5 +13,5 @@ export const create = (data) => {
         },
         body: JSON.stringify(data),
     })
-        .then(res => res.json());
+        .then(res => res.json())
 }

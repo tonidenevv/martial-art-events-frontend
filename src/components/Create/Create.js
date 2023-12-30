@@ -12,9 +12,11 @@ const Create = () => {
     });
 
     const [errors, setErrors] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
+        setIsLoading(true);
         e.preventDefault();
         const errorsArr =
             [(values.title.length < 5 || values.title.length > 15),
@@ -33,8 +35,13 @@ const Create = () => {
 
         if (!errorsArr.some(x => x === true)) {
             eventService.create(values)
-                .then(() => navigate('/events'))
-                .catch(err => console.log(err));
+                .then(() => {
+                    setIsLoading(false);
+                    navigate('/events')
+                })
+                .catch(err => {
+                    console.log(err);
+                });
         }
     }
 
@@ -43,76 +50,82 @@ const Create = () => {
     }
 
     return (
-        <>
-            <h3 className="text-center">Create an Event</h3>
-            <div className="container align-items-center d-flex justify-content-center">
-                <form onSubmit={handleSubmit}>
-                    <div className="mb-3">
-                        {errors.title && <div style={{ color: 'red' }}>Title should be between 5 and 15 characters</div>}
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="title"
-                            name="title"
-                            placeholder="Title..."
-                            onChange={handleChange}
-                            value={values.title}
-                        />
-                    </div>
-                    <div className="mb-3">
-                        {errors.sport && <div style={{ color: 'red' }}>Sport should be between 2 and 15 characters</div>}
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="sport"
-                            name="sport"
-                            placeholder="Sport Type..."
-                            onChange={handleChange}
-                            value={values.sport}
-                        />
-                    </div>
-                    <div className="mb-3">
-                        {errors.ticketPrice && <div style={{ color: 'red' }}>Ticket price should be between 1 and 9999 dollars</div>}
-                        <input
-                            type="number"
-                            className="form-control"
-                            id="ticket-price"
-                            name="ticketPrice"
-                            placeholder="Ticket price..."
-                            onChange={handleChange}
-                            value={values.ticketPrice}
-                        />
-                    </div>
-                    <div className="mb-3">
-                        {errors.description && <div style={{ color: 'red' }}>Description should be between 5 and 15 characters</div>}
-                        <textarea
-                            type="text"
-                            className="form-control"
-                            id="description"
-                            name="description"
-                            placeholder="Description..."
-                            onChange={handleChange}
-                            value={values.description}
-                        />
-                    </div>
-                    <div className="mb-3">
-                        {errors.imageUrl && <div style={{ color: 'red' }}>Image URL is required</div>}
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="imageUrl"
-                            name="imageUrl"
-                            placeholder="Image URL..."
-                            onChange={handleChange}
-                            value={values.imageUrl}
-                        />
-                    </div>
-                    <button type="submit" className="btn btn-primary">
-                        Create
-                    </button>
-                </form>
+        isLoading
+            ? <div className="d-flex justify-content-center">
+                <div className="spinner-border text-primary" style={{ width: '6rem', height: '6rem' }} role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </div>
             </div>
-        </>
+            : <>
+                <h3 className="text-center">Create an Event</h3>
+                <div className="container align-items-center d-flex justify-content-center">
+                    <form onSubmit={handleSubmit}>
+                        <div className="mb-3">
+                            {errors.title && <div style={{ color: 'red' }}>Title should be between 5 and 15 characters</div>}
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="title"
+                                name="title"
+                                placeholder="Title..."
+                                onChange={handleChange}
+                                value={values.title}
+                            />
+                        </div>
+                        <div className="mb-3">
+                            {errors.sport && <div style={{ color: 'red' }}>Sport should be between 2 and 15 characters</div>}
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="sport"
+                                name="sport"
+                                placeholder="Sport Type..."
+                                onChange={handleChange}
+                                value={values.sport}
+                            />
+                        </div>
+                        <div className="mb-3">
+                            {errors.ticketPrice && <div style={{ color: 'red' }}>Ticket price should be between 1 and 9999 dollars</div>}
+                            <input
+                                type="number"
+                                className="form-control"
+                                id="ticket-price"
+                                name="ticketPrice"
+                                placeholder="Ticket price..."
+                                onChange={handleChange}
+                                value={values.ticketPrice}
+                            />
+                        </div>
+                        <div className="mb-3">
+                            {errors.description && <div style={{ color: 'red' }}>Description should be between 5 and 15 characters</div>}
+                            <textarea
+                                type="text"
+                                className="form-control"
+                                id="description"
+                                name="description"
+                                placeholder="Description..."
+                                onChange={handleChange}
+                                value={values.description}
+                            />
+                        </div>
+                        <div className="mb-3">
+                            {errors.imageUrl && <div style={{ color: 'red' }}>Image URL is required</div>}
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="imageUrl"
+                                name="imageUrl"
+                                placeholder="Image URL..."
+                                onChange={handleChange}
+                                value={values.imageUrl}
+                            />
+                        </div>
+                        <button type="submit" className="btn btn-primary">
+                            Create
+                        </button>
+                    </form>
+                </div>
+            </>
     )
 }
 
