@@ -5,6 +5,7 @@ import Events from "./components/Events/Events";
 import Create from "./components/Create/Create";
 import Details from "./components/Details/Details";
 import Edit from "./components/Edit/Edit";
+import Register from "./components/Register/Register";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/create" element={<Create />} />
           <Route path="/events/:eventId" element={<Details />} />
           <Route path="/events/:eventId/edit" element={<Edit />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </div>
     </BrowserRouter>
