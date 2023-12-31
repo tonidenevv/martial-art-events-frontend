@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import * as eventService from '../../services/eventService';
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const Edit = () => {
     const [values, setValues] = useState({
@@ -12,24 +14,32 @@ const Edit = () => {
     });
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
+    const [isOwner, setIsOwner] = useState(false);
 
     const { eventId } = useParams();
+    const navigate = useNavigate();
+
+    const { auth } = useContext(AuthContext);
 
     useEffect(() => {
+
         setIsLoading(true);
         eventService.getOne(eventId)
             .then(res => {
-                setValues({ title: res.title, sport: res.sport, ticketPrice: res.ticketPrice, description: res.description, imageUrl: res.imageUrl })
                 setIsLoading(false);
+                if (auth._id === res._ownerId) {
+                    setValues({ title: res.title, sport: res.sport, ticketPrice: res.ticketPrice, description: res.description, imageUrl: res.imageUrl })
+                } else {
+                    navigate(`/events/${eventId}`);
+                }
             })
             .catch(err => console.log(err));
-    }, [eventId]);
+    }, [eventId, auth._id, navigate]);
 
     const handleChange = (e) => {
         setValues(old => ({ ...old, [e.target.name]: e.target.value }))
     }
 
-    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();

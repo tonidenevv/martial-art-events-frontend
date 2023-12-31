@@ -7,13 +7,7 @@ import { Navigate } from "react-router-dom";
 const Logout = ({ handleLogout }) => {
     const { auth } = useContext(AuthContext);
     const navigate = useNavigate();
-    let token = '';
-
-    if (auth) {
-        token = auth.token;
-    } else {
-        return <Navigate to="/login" replace={true} />
-    }
+    let token = auth?.token;
 
     if (token) {
         userService.logout(token)
@@ -23,6 +17,8 @@ const Logout = ({ handleLogout }) => {
                     navigate('/', { replace: true });
                 }
             });
+    } else {
+        return <Navigate to="/login" replace={true} />
     }
 }
 

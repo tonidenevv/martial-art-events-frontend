@@ -5,11 +5,12 @@ export const getAll = () => {
         .then(res => res.json())
 }
 
-export const create = (data) => {
+export const create = (data, token) => {
     return fetch(BASE_URL, {
         method: 'POST',
         headers: {
             'content-type': 'application/json',
+            Authorize: token,
         },
         body: JSON.stringify(data),
     })
@@ -26,6 +27,7 @@ export const edit = (id, data) => {
         method: 'PUT',
         headers: {
             'content-type': 'application/json',
+            // authorize: token,
         },
         body: JSON.stringify(data),
     })

@@ -24,7 +24,7 @@ export const login = (data) => {
 export const logout = (token) => {
     return fetch(`${BASE_URL}/logout`, {
         headers: {
-            authorize: token,
+            Authorize: token,
         },
     })
         .then(res => res.json());

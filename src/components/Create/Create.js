@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as eventService from '../../services/eventService';
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const Create = () => {
     const [values, setValues] = useState({
@@ -14,6 +16,13 @@ const Create = () => {
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
+    const { auth } = useContext(AuthContext);
+
+    useEffect(() => {
+        if (!auth?.token) {
+            navigate('/');
+        }
+    }, [auth?.token, navigate]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -34,7 +43,7 @@ const Create = () => {
 
         if (!errorsArr.some(x => x === true)) {
             setIsLoading(true);
-            eventService.create(values)
+            eventService.create(values, auth.token)
                 .then(() => {
                     setIsLoading(false);
                     navigate('/events')

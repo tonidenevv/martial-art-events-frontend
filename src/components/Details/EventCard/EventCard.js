@@ -1,11 +1,26 @@
 import { Link, useNavigate } from "react-router-dom";
 import Modal from "../../Modal/Modal";
 import * as eventService from '../../../services/eventService';
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useContext } from "react";
+import { AuthContext } from '../../../contexts/AuthContext';
 
 const EventCard = ({ event }) => {
     const [isLoading, setIsLoading] = useState(false);
+    const [isUser, setIsUser] = useState(false);
+    const [isOwner, setIsOwner] = useState(false);
+    const { auth } = useContext(AuthContext);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const token = auth?.token;
+        if (token) {
+            setIsOwner(Boolean(auth._id === event._ownerId))
+            setIsUser(true);
+        } else {
+            setIsUser(false);
+        }
+    }, [auth?.token, auth._id, event._id]);
 
     const handleDelete = (id) => {
         setIsLoading(true);
@@ -52,8 +67,14 @@ const EventCard = ({ event }) => {
                                 <p className="card-text">
                                     Attending: {event.attending?.length}
                                 </p>
-                                <Link className="btn btn-warning m-4" to={`/events/${event._id}/edit`} role="button">Edit</Link>
-                                <button type="button" className="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button>
+                                {isOwner &&
+                                    <>
+                                        <Link className="btn btn-warning m-3" to={`/events/${event._id}/edit`} role="button">Edit</Link>
+                                        <button type="button" className="btn btn-danger m-3" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button>
+
+                                    </>
+                                }
+                                {(isUser && !isOwner) && <button type="button" className="btn btn-primary m-3">Attend</button>}
                             </div>
                         </div>
                     </div>
