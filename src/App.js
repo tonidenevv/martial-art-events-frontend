@@ -6,8 +6,15 @@ import Create from "./components/Create/Create";
 import Details from "./components/Details/Details";
 import Edit from "./components/Edit/Edit";
 import Register from "./components/Register/Register";
+import { useState } from "react";
 
 function App() {
+  const [auth, setAuth] = useState(JSON.parse(localStorage.getItem('user')));
+
+  const handleRegister = (data) => {
+    localStorage.setItem('user', JSON.stringify(data));
+    setAuth(JSON.parse(localStorage.getItem('user')));
+  }
   return (
     <BrowserRouter>
       <div>
@@ -18,7 +25,7 @@ function App() {
           <Route path="/create" element={<Create />} />
           <Route path="/events/:eventId" element={<Details />} />
           <Route path="/events/:eventId/edit" element={<Edit />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/register" element={<Register handleRegister={handleRegister} />} />
         </Routes>
       </div>
     </BrowserRouter>
