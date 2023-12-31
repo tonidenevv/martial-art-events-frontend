@@ -22,21 +22,26 @@ export const getOne = (id) => {
         .then(res => res.json())
 }
 
-export const edit = (id, data) => {
+export const edit = (id, data, token, eventOwnerId) => {
     return fetch(`${BASE_URL}/${id}`, {
         method: 'PUT',
         headers: {
             'content-type': 'application/json',
-            // authorize: token,
+            authorize: token,
+            eventOwnerId
         },
         body: JSON.stringify(data),
     })
         .then(res => res.json())
 }
 
-export const del = (id) => {
+export const del = (id, token, eventOwnerId) => {
     return fetch(`${BASE_URL}/${id}`, {
         method: 'DELETE',
+        headers: {
+            Authorize: token,
+            eventOwnerId,
+        }
     })
         .then(res => res.json());
 }

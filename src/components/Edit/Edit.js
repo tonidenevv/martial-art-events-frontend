@@ -14,7 +14,7 @@ const Edit = () => {
     });
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
-    const [isOwner, setIsOwner] = useState(false);
+    const [eventOwnerId, setEventOwnerId] = useState('');
 
     const { eventId } = useParams();
     const navigate = useNavigate();
@@ -28,9 +28,10 @@ const Edit = () => {
             .then(res => {
                 setIsLoading(false);
                 if (auth._id === res._ownerId) {
+                    setEventOwnerId(res._ownerId);
                     setValues({ title: res.title, sport: res.sport, ticketPrice: res.ticketPrice, description: res.description, imageUrl: res.imageUrl })
                 } else {
-                    navigate(`/events/${eventId}`);
+                    navigate(`/events/${eventId}`, { replace: true });
                 }
             })
             .catch(err => console.log(err));
@@ -61,7 +62,7 @@ const Edit = () => {
 
         if (!errorsArr.some(x => x === true)) {
             setIsLoading(true);
-            eventService.edit(eventId, values)
+            eventService.edit(eventId, values, auth.token, eventOwnerId)
                 .then(() => {
                     setIsLoading(false);
                     navigate(`/events/${eventId}`)

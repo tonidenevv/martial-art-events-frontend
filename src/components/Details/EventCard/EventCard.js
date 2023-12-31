@@ -9,22 +9,27 @@ const EventCard = ({ event }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [isUser, setIsUser] = useState(false);
     const [isOwner, setIsOwner] = useState(false);
+    const [eventOwnerId, setEventOwnerId] = useState('');
     const { auth } = useContext(AuthContext);
     const navigate = useNavigate();
 
     useEffect(() => {
         const token = auth?.token;
         if (token) {
-            setIsOwner(Boolean(auth._id === event._ownerId))
+            if (auth._id === event._ownerId) {
+                setEventOwnerId(event._ownerId);
+                setIsOwner(true)
+            }
             setIsUser(true);
         } else {
             setIsUser(false);
         }
-    }, [auth?.token, auth._id, event._id]);
+    }, [auth?.token, auth?._id, event._id, event._ownerId]);
 
     const handleDelete = (id) => {
         setIsLoading(true);
-        eventService.del(id)
+        console.log(eventOwnerId);
+        eventService.del(id, auth.token, eventOwnerId)
             .then(() => {
                 setIsLoading(false);
                 navigate('/events');
