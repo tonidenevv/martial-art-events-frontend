@@ -58,3 +58,14 @@ export const comment = (comment, eventId, token, eventOwnerId) => {
     })
         .then(res => res.json());
 }
+
+export const attend = (eventId, eventOwnerId, token) => {
+    return fetch(`${BASE_URL}/${eventId}/attend`, {
+        method: 'POST',
+        headers: {
+            Authorize: token,
+            eventOwnerId,
+        },
+    })
+        .then(res => res.json());
+}

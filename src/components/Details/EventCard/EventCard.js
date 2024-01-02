@@ -11,6 +11,8 @@ const EventCard = ({ event }) => {
     const [isUser, setIsUser] = useState(false);
     const [isOwner, setIsOwner] = useState(false);
     const [eventOwnerId, setEventOwnerId] = useState('');
+    const [isAttending, setIsAttending] = useState(false);
+    const [attendingCount, setAttendingCount] = useState(0);
     const { auth } = useContext(AuthContext);
     const navigate = useNavigate();
 
@@ -21,11 +23,13 @@ const EventCard = ({ event }) => {
                 setEventOwnerId(event._ownerId);
                 setIsOwner(true)
             }
+            setIsAttending(event.attending?.some(x => x === auth._id));
             setIsUser(true);
         } else {
             setIsUser(false);
         }
-    }, [auth?.token, auth?._id, event._id, event._ownerId]);
+        setAttendingCount(event.attending?.length);
+    }, [auth?.token, auth?._id, event._id, event._ownerId, event.attending]);
 
     const handleDelete = (id) => {
         setIsLoading(true);
@@ -33,6 +37,17 @@ const EventCard = ({ event }) => {
             .then(() => {
                 setIsLoading(false);
                 navigate('/events');
+            })
+            .catch(err => console.log(err));
+    }
+
+    const handleAttend = (eventId, ownerId) => {
+        setIsLoading(true);
+        eventService.attend(eventId, ownerId, auth?.token)
+            .then((res) => {
+                setIsAttending(res.attending.some(x => x === auth?._id));
+                setIsLoading(false)
+                setAttendingCount(res.attending?.length);
             })
             .catch(err => console.log(err));
     }
@@ -70,16 +85,16 @@ const EventCard = ({ event }) => {
                                     Ticket Price: {event.ticketPrice}$
                                 </p>
                                 <p className="card-text">
-                                    Attending: {event.attending?.length}
+                                    Attending: {attendingCount}
                                 </p>
                                 {isOwner &&
                                     <>
                                         <Link className="btn btn-warning m-3" to={`/events/${event._id}/edit`} role="button">Edit</Link>
                                         <button type="button" className="btn btn-danger m-3" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button>
-
                                     </>
                                 }
-                                {(isUser && !isOwner) && <button type="button" className="btn btn-primary m-3">Attend</button>}
+                                {(isUser && !isOwner && !isAttending) && <button onClick={() => handleAttend(event._id, event._ownerId,)} type="button" className="btn btn-primary m-3">Attend</button>}
+                                {(isUser && !isOwner && isAttending) && <button type="button" className="btn btn-primary m-3" disabled>Attending</button>}
                             </div>
                         </div>
                     </div>
