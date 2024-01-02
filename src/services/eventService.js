@@ -74,3 +74,8 @@ export const getOwnedById = (ownerId) => {
     return fetch(`${BASE_URL}/owned/${ownerId}`)
         .then(res => res.json());
 }
+
+export const getAttendingTo = (ownerId) => {
+    return fetch(`${BASE_URL}/attending/${ownerId}`)
+        .then(res => res.json());
+}

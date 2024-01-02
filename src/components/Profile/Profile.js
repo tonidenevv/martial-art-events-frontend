@@ -6,7 +6,8 @@ import Event from "../Events/Event/Event";
 
 const Profile = () => {
     const { auth } = useContext(AuthContext);
-    const [events, setEvents] = useState([]);
+    const [createdEvents, setCreatedEvents] = useState([]);
+    const [attendingToEvents, setAttendingToEvents] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
     const navigate = useNavigate();
@@ -16,10 +17,11 @@ const Profile = () => {
         if (!auth?.token) {
             navigate('/login');
         } else {
-            eventService.getOwnedById(auth?._id)
+            Promise.all([eventService.getOwnedById(auth?._id), eventService.getAttendingTo(auth?._id)])
                 .then(res => {
                     setIsLoading(false);
-                    setEvents(res)
+                    setCreatedEvents(res[0]);
+                    setAttendingToEvents(res[1]);
                 })
                 .catch(err => console.log(err));
         }
@@ -36,23 +38,11 @@ const Profile = () => {
                 <h3 className="card-header">{auth?.username || 'Profile'}</h3>
                 <div className="card-body">
                     <h5 className="card-title">Created Events</h5>
-                    {events.length > 0 ? <div className="row">{events.map(x => <Event key={x._id} event={x} />)}</div> : <h6>No created events..</h6>}
+                    {createdEvents.length > 0 ? <div className="row">{createdEvents.map(x => <Event key={x._id} event={x} />)}</div> : <h6>No created events..</h6>}
                 </div>
                 <div className="card-body">
                     <h5 className="card-title">Attending</h5>
-                    <div className="card" style={{ width: "18rem" }}>
-                        <img src="..." className="card-img-top" alt="..." />
-                        <div className="card-body">
-                            <h5 className="card-title">Card title</h5>
-                            <p className="card-text">
-                                Some quick example text to build on the card title and make up the bulk of
-                                the card's content.
-                            </p>
-                            <a href="#" className="btn btn-primary">
-                                Go somewhere
-                            </a>
-                        </div>
-                    </div>
+                    {attendingToEvents.length > 0 ? <div className="row">{attendingToEvents.map(x => <Event key={x._id} event={x} />)}</div> : <h6>You are not attending to any events..</h6>}
                 </div>
             </div>
     )
