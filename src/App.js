@@ -10,6 +10,7 @@ import { useState } from "react";
 import Login from "./components/Login/Login";
 import Logout from "./components/Logout/Logout";
 import { AuthContext } from "./contexts/AuthContext";
+import Profile from "./components/Profile/Profile";
 
 function App() {
   const [auth, setAuth] = useState(JSON.parse(localStorage.getItem('user')));
@@ -43,6 +44,7 @@ function App() {
             <Route path="/register" element={<Register handleRegister={handleRegister} />} />
             <Route path="/login" element={<Login handleLogin={handleLogin} />} />
             <Route path="/logout" element={<Logout handleLogout={handleLogout} />} />
+            <Route path="/profile" element={<Profile />} />
           </Routes>
         </div>
       </BrowserRouter>

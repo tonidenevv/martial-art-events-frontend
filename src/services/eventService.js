@@ -69,3 +69,8 @@ export const attend = (eventId, eventOwnerId, token) => {
     })
         .then(res => res.json());
 }
+
+export const getOwnedById = (ownerId) => {
+    return fetch(`${BASE_URL}/owned/${ownerId}`)
+        .then(res => res.json());
+}
