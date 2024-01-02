@@ -45,3 +45,16 @@ export const del = (id, token, eventOwnerId) => {
     })
         .then(res => res.json());
 }
+
+export const comment = (comment, eventId, token, eventOwnerId) => {
+    return fetch(`${BASE_URL}/${eventId}/comment`, {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json',
+            Authorize: token,
+            eventOwnerId,
+        },
+        body: JSON.stringify({ comment })
+    })
+        .then(res => res.json());
+}

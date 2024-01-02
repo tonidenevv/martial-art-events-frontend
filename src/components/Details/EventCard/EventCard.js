@@ -4,6 +4,7 @@ import * as eventService from '../../../services/eventService';
 import { useEffect, useState } from "react";
 import { useContext } from "react";
 import { AuthContext } from '../../../contexts/AuthContext';
+import CommentSection from "./CommentSection/CommentSection";
 
 const EventCard = ({ event }) => {
     const [isLoading, setIsLoading] = useState(false);
@@ -28,7 +29,6 @@ const EventCard = ({ event }) => {
 
     const handleDelete = (id) => {
         setIsLoading(true);
-        console.log(eventOwnerId);
         eventService.del(id, auth.token, eventOwnerId)
             .then(() => {
                 setIsLoading(false);
@@ -84,6 +84,7 @@ const EventCard = ({ event }) => {
                         </div>
                     </div>
                 </div>
+                <CommentSection eventId={event._id} token={auth?.token} eventOwnerId={event._ownerId} />
             </>
     )
 }
