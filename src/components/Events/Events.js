@@ -31,7 +31,7 @@ const Events = () => {
                 ? <p className="text-center fs-1">{error}</p>
                 : events.length > 0
                     ? <div className="row">{events.map(x => <Event key={x._id} event={x} />)}</div>
-                    : <p>No events found.</p>
+                    : <h3 className="text-center">No events found.</h3>
     )
 };
 

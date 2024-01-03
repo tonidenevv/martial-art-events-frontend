@@ -13,6 +13,8 @@ const Register = ({ handleRegister }) => {
 
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     const navigate = useNavigate();
 
@@ -24,6 +26,14 @@ const Register = ({ handleRegister }) => {
 
     const handleChange = (e) => {
         setValues(old => ({ ...old, [e.target.name]: e.target.value }));
+    }
+
+    const handleShowConfirmPassword = () => {
+        setShowConfirmPassword(prev => !prev);
+    }
+
+    const handleShowPassword = () => {
+        setShowPassword(prev => !prev);
     }
 
     const handleSubmit = (e) => {
@@ -80,29 +90,35 @@ const Register = ({ handleRegister }) => {
                                 value={values.username}
                             />
                         </div>
-                        <div className="mb-3">
-                            {errors.password && <div style={{ color: 'red' }}>Password should be between 5 and 15 characters</div>}
-                            <input
-                                type="password"
-                                className="form-control"
-                                id="password"
-                                name="password"
-                                placeholder="Password..."
-                                onChange={handleChange}
-                                value={values.password}
-                            />
+                        <div className="mb-3 container">
+                            <div className="row">
+                                {errors.password && <div style={{ color: 'red' }}>Password should be between 5 and 15 characters</div>}
+                                <input
+                                    type={showPassword ? "text" : "password"}
+                                    className="form-control col-sm"
+                                    id="password"
+                                    name="password"
+                                    placeholder="Password..."
+                                    onChange={handleChange}
+                                    value={values.password}
+                                />
+                                <button onClick={handleShowPassword} type="button" className="btn btn-dark btn-sm col-sm-2">👁️</button>
+                            </div>
                         </div>
-                        <div className="mb-3">
-                            {errors.confirmPassword && <div style={{ color: 'red' }}>Passwords don't match</div>}
-                            <input
-                                type="password"
-                                className="form-control"
-                                id="confirm-password"
-                                name="confirmPassword"
-                                placeholder="Confirm password..."
-                                onChange={handleChange}
-                                value={values.confirmPassword}
-                            />
+                        <div className="mb-3 container">
+                            <div className="row">
+                                {errors.confirmPassword && <div style={{ color: 'red' }}>Passwords don't match</div>}
+                                <input
+                                    type={showConfirmPassword ? "text" : "password"}
+                                    className="form-control col-sm"
+                                    id="confirm-password"
+                                    name="confirmPassword"
+                                    placeholder="Confirm password..."
+                                    onChange={handleChange}
+                                    value={values.confirmPassword}
+                                />
+                                <button onClick={handleShowConfirmPassword} type="button" className="btn btn-dark btn-sm col-sm-2">👁️</button>
+                            </div>
                         </div>
                         <button type="submit" className="btn btn-primary">
                             Register

@@ -13,6 +13,7 @@ const Login = ({ handleLogin }) => {
 
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     const navigate = useNavigate();
 
@@ -25,6 +26,10 @@ const Login = ({ handleLogin }) => {
 
     const handleChange = (e) => {
         setValues(old => ({ ...old, [e.target.name]: e.target.value }));
+    }
+
+    const handleShowPassword = () => {
+        setShowPassword(prev => !prev);
     }
 
     const handleSubmit = (e) => {
@@ -79,16 +84,19 @@ const Login = ({ handleLogin }) => {
                                 value={values.username}
                             />
                         </div>
-                        <div className="mb-3">
-                            <input
-                                type="password"
-                                className="form-control"
-                                id="password"
-                                name="password"
-                                placeholder="Password..."
-                                onChange={handleChange}
-                                value={values.password}
-                            />
+                        <div className="mb-3 container">
+                            <div className="row">
+                                <input
+                                    type={showPassword ? "text" : "password"}
+                                    className="form-control col-sm"
+                                    id="password"
+                                    name="password"
+                                    placeholder="Password..."
+                                    onChange={handleChange}
+                                    value={values.password}
+                                />
+                                <button onClick={handleShowPassword} type="button" className="btn btn-dark btn-sm col-sm-2">👁️</button>
+                            </div>
                         </div>
                         <button type="submit" className="btn btn-primary">
                             Login
