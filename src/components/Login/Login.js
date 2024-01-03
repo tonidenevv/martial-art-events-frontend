@@ -72,8 +72,8 @@ const Login = ({ handleLogin }) => {
                 <div className="container align-items-center d-flex justify-content-center">
                     <form onSubmit={handleSubmit}>
                         <div className="mb-3">
-                            {errors.serverError && <div style={{ color: 'red' }}>{errors.serverError}</div>}
-                            {(errors.username || errors.password) && <div style={{ color: 'red' }}>Wrong username or password</div>}
+                            {errors.serverError && <div className="text-center" style={{ color: 'red' }}>{errors.serverError}</div>}
+                            {(errors.username || errors.password) && <div className="text-center" style={{ color: 'red' }}>Wrong username or password</div>}
                             <input
                                 type="text"
                                 className="form-control"
@@ -98,9 +98,11 @@ const Login = ({ handleLogin }) => {
                                 <button onClick={handleShowPassword} type="button" className="btn btn-dark btn-sm col-sm-2">👁️</button>
                             </div>
                         </div>
-                        <button type="submit" className="btn btn-primary">
-                            Login
-                        </button>
+                        <div className="text-center">
+                            <button type="submit" className="btn btn-primary">
+                                Login
+                            </button>
+                        </div>
                     </form>
                 </div>
             </>

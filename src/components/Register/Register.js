@@ -77,9 +77,9 @@ const Register = ({ handleRegister }) => {
                 <h3 className="text-center">Register</h3>
                 <div className="container align-items-center d-flex justify-content-center">
                     <form onSubmit={handleSubmit}>
+                        {errors.serverError && <div className="text-center" style={{ color: 'red' }}>{errors.serverError}</div>}
+                        {errors.username && <div className="text-center" style={{ color: 'red' }}>Username should be between 5 and 15 characters</div>}
                         <div className="mb-3">
-                            {errors.serverError && <div style={{ color: 'red' }}>{errors.serverError}</div>}
-                            {errors.username && <div style={{ color: 'red' }}>Username should be between 5 and 15 characters</div>}
                             <input
                                 type="text"
                                 className="form-control"
@@ -91,8 +91,8 @@ const Register = ({ handleRegister }) => {
                             />
                         </div>
                         <div className="mb-3 container">
+                            {errors.password && <div className="text-center" style={{ color: 'red' }}>Password should be between 5 and 15 characters</div>}
                             <div className="row">
-                                {errors.password && <div style={{ color: 'red' }}>Password should be between 5 and 15 characters</div>}
                                 <input
                                     type={showPassword ? "text" : "password"}
                                     className="form-control col-sm"
@@ -107,7 +107,7 @@ const Register = ({ handleRegister }) => {
                         </div>
                         <div className="mb-3 container">
                             <div className="row">
-                                {errors.confirmPassword && <div style={{ color: 'red' }}>Passwords don't match</div>}
+                                {errors.confirmPassword && <div className="text-center" style={{ color: 'red' }}>Passwords don't match</div>}
                                 <input
                                     type={showConfirmPassword ? "text" : "password"}
                                     className="form-control col-sm"
@@ -120,9 +120,11 @@ const Register = ({ handleRegister }) => {
                                 <button onClick={handleShowConfirmPassword} type="button" className="btn btn-dark btn-sm col-sm-2">👁️</button>
                             </div>
                         </div>
-                        <button type="submit" className="btn btn-primary">
-                            Register
-                        </button>
+                        <div className="text-center">
+                            <button type="submit" className="btn btn-primary">
+                                Register
+                            </button>
+                        </div>
                     </form>
                 </div>
             </>

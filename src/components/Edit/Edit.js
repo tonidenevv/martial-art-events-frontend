@@ -144,9 +144,11 @@ const Edit = () => {
                                 value={values.imageUrl}
                             />
                         </div>
-                        <button type="submit" className="btn btn-primary">
-                            Edit
-                        </button>
+                        <div className="text-center">
+                            <button type="submit" className="btn btn-primary">
+                                Edit
+                            </button>
+                        </div>
                     </form>
                 </div>
             </>

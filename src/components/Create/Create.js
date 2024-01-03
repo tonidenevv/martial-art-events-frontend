@@ -127,9 +127,11 @@ const Create = () => {
                                 value={values.imageUrl}
                             />
                         </div>
-                        <button type="submit" className="btn btn-primary">
-                            Create
-                        </button>
+                        <div className="text-center">
+                            <button type="submit" className="btn btn-primary">
+                                Create
+                            </button>
+                        </div>
                     </form>
                 </div>
             </>
