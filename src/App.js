@@ -11,6 +11,7 @@ import Login from "./components/Login/Login";
 import Logout from "./components/Logout/Logout";
 import { AuthContext } from "./contexts/AuthContext";
 import Profile from "./components/Profile/Profile";
+import Unknown from "./components/Unknown/Unknown";
 
 function App() {
   const [auth, setAuth] = useState(JSON.parse(localStorage.getItem('user')));
@@ -45,6 +46,7 @@ function App() {
             <Route path="/login" element={<Login handleLogin={handleLogin} />} />
             <Route path="/logout" element={<Logout handleLogout={handleLogout} />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="*" element={<Unknown />} />
           </Routes>
         </div>
       </BrowserRouter>

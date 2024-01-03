@@ -70,7 +70,7 @@ const CommentSection = ({ eventId, token, eventOwnerId }) => {
                 }
                 <div className="card mt-4">
                     <div className="card-header">Comments</div>
-                    {comments.length > 0 ? comments.map((x, i) => <CommentItem key={i} comment={x} />) : <div>No comments yet...</div>}
+                    {comments?.length > 0 ? comments.map((x, i) => <CommentItem key={i} comment={x} />) : <div>No comments yet...</div>}
                 </div>
             </div>
 

@@ -52,7 +52,7 @@ export const comment = (comment, eventId, token, eventOwnerId) => {
         headers: {
             'content-type': 'application/json',
             Authorize: token,
-            eventOwnerId,
+            eventOwnerId: eventOwnerId,
         },
         body: JSON.stringify({ comment })
     })

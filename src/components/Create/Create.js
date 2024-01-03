@@ -19,10 +19,8 @@ const Create = () => {
     const { auth } = useContext(AuthContext);
 
     useEffect(() => {
-        if (!auth?.token) {
-            navigate('/');
-        }
-    }, [auth?.token, navigate]);
+        if (!auth) navigate('/login');
+    }, [auth, navigate]);
 
     const handleSubmit = (e) => {
         e.preventDefault();

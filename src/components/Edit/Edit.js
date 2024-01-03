@@ -27,7 +27,7 @@ const Edit = () => {
         eventService.getOne(eventId)
             .then(res => {
                 setIsLoading(false);
-                if (auth._id === res._ownerId) {
+                if (auth?._id === res._ownerId && auth) {
                     setEventOwnerId(res._ownerId);
                     setValues({ title: res.title, sport: res.sport, ticketPrice: res.ticketPrice, description: res.description, imageUrl: res.imageUrl })
                 } else {
@@ -35,7 +35,7 @@ const Edit = () => {
                 }
             })
             .catch(err => console.log(err));
-    }, [eventId, auth._id, navigate]);
+    }, [eventId, auth?._id, navigate, auth]);
 
     const handleChange = (e) => {
         setValues(old => ({ ...old, [e.target.name]: e.target.value }))

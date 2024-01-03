@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as userService from '../../services/userService';
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../contexts/AuthContext";
+import { useContext } from "react";
 
 const Register = ({ handleRegister }) => {
     const [values, setValues] = useState({
@@ -13,6 +15,12 @@ const Register = ({ handleRegister }) => {
     const [isLoading, setIsLoading] = useState(false);
 
     const navigate = useNavigate();
+
+    const { auth } = useContext(AuthContext);
+
+    useEffect(() => {
+        if (auth) navigate('/');
+    }, [auth, navigate])
 
     const handleChange = (e) => {
         setValues(old => ({ ...old, [e.target.name]: e.target.value }));
