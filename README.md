@@ -1,5 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+Deployed Application: https://martial-art-events-backend.vercel.app/
+
 # Information
 The frontend of a full-stack application, the backend can be found here: https://github.com/tonidenevv/martial-art-events-backend
 * The main idea of the app is for users to be able to find new martial art events.
