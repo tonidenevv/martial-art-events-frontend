@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:5000/users'
+const BASE_URL = 'https://martial-art-events-backend.vercel.app/users'
 export const register = (data) => {
     return fetch(`${BASE_URL}/register`, {
         method: 'POST',

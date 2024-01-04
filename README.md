@@ -16,6 +16,8 @@ In the project directory, you can run:
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
+Change the BASE_URL's in the eventService.js and userService.js to http://localhost:{PORT}/{endpoint} where PORT is the port you choose in the .env file in the backend application and endpoint is either '/users' or '/events' based on which service it is.
+
 However, it will work only when the server is started.
 To start the server, follow the instructions in my backend repository: https://github.com/tonidenevv/martial-art-events-backend
 

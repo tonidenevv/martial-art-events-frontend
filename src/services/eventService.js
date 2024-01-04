@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:5000/events';
+const BASE_URL = 'https://martial-art-events-backend.vercel.app/events';
 
 export const getAll = () => {
     return fetch(BASE_URL)
