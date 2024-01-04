@@ -70,9 +70,9 @@ const Login = ({ handleLogin }) => {
             : <>
                 <h3 className="text-center">Login</h3>
                 <div className="container align-items-center d-flex justify-content-center">
-                    <form onSubmit={handleSubmit}>
+                    <form data-testid="form" onSubmit={handleSubmit}>
                         <div className="mb-3">
-                            {errors.serverError && <div className="text-center" style={{ color: 'red' }}>{errors.serverError}</div>}
+                            {errors.serverError && <div className="text-center" data-testid="server-error" style={{ color: 'red' }}>{errors.serverError}</div>}
                             {(errors.username || errors.password) && <div className="text-center" style={{ color: 'red' }}>Wrong username or password</div>}
                             <input
                                 type="text"
